@@ -8,6 +8,7 @@ export const createProfile = async (req, res) => {
         if (existing) {
             return res.status(400).json({ message: "username already taken" })
         }
+
         if (!name || !username || !bio || !avatar || !phone || !address) {
             return res.status(400).json({
                 message: "All field are required for Profile"
@@ -23,7 +24,6 @@ export const createProfile = async (req, res) => {
             address,
             user: req.user?._id
         })
-
         res.status(201).json({
             message: "Profile created successfully",
             profile
@@ -63,17 +63,17 @@ export const updateProfile = async (req, res) => {
 };
 
 export const getMyProfile = async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user._id })
-      .populate("user", "email role");
+    try {
+        const profile = await Profile.findOne({ user: req.user._id })
+            .populate("user", "email role");
 
-    if (!profile) {
-      return res.status(404).json({ message: "Profile not found" });
+        if (!profile) {
+            return res.status(404).json({ message: "Profile not found" });
+        }
+
+        res.status(200).json(profile);
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-
-    res.status(200).json(profile);
-
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 };
