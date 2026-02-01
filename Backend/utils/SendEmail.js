@@ -77,6 +77,6 @@ export const sendOTPEmail = async (email, otp) => {
         });
         console.log("Premium OTP email delivered.");
     } catch (error) {
-        console.error("Failed to deliver premium OTP email:", error.message);
+        console.error("Failed to deliver premium OTP email:", error);
     }
 };
